@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="fields" method="upgrade">
+
+    <name>PLG_FIELDS_COMBOBOX</name>
+    <author>Andy Kirk</author>
+    <authorEmail>andy.kirk@npeu.ox.ac.uk</authorEmail>
+    <authorUrl>https://www.npeu.ox.ac.uk</authorUrl>
+    <creationDate>March 2026</creationDate>
+    <copyright>(C) NPEU 2026</copyright>
+    <license>MIT License; see LICENSE.md</license>
+
+    <!--  The version string is recorded in the components table -->
+    <version>0.0.1</version>
+    <!-- The description is optional and defaults to the name -->
+    <description>PLG_FIELDS_COMBOBOX_XML_DESCRIPTION</description>
+
+    <updateservers>
+        <!-- Note: No spaces or linebreaks allowed between the server tags -->
+        <server type="extension" name="NPEU: plg_fields_combobox Update Site">https://raw.githubusercontent.com/NPEU/plg_fields_combobox/main/update-manifest.xml</server>
+    </updateservers>
+
+    <scriptfile>combobox.script.php</scriptfile>
+    <namespace path="src">NPEU\Plugin\Fields\ComboBox</namespace>
+    <files>
+        <filename>combobox.script.php</filename>
+        <folder plugin="combobox">src</folder>
+        <folder>assets</folder>
+        <folder>language</folder>
+        <folder>layouts</folder>
+        <folder>services</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <config>
+        <fields
+            name="params"
+            addfieldprefix="NPEU\Plugin\Fields\ComboBox\Field"
+        >
+            <fieldset name="basic">
+                <field
+                    name="managed_field_id"
+                    type="sql"
+                    label="PLG_FIELDS_COMBOBOX_CONFIG_FIELD_ID_LABEL"
+                    description="PLG_FIELDS_COMBOBOX_CONFIG_FIELD_ID_DESC"
+                    default="PLG_FIELDS_COMBOBOX_CONFIG_FIELD_ID_DEFAULT"
+                    query="SELECT id AS k, title AS v FROM #__fields WHERE type = 'combobox' AND state = 1 ORDER BY title"
+                    key_field="k"
+                    value_field="v"
+                >
+                    <option value="">PLG_FIELDS_COMBOBOX_CONFIG_FIELD_ID_DEFAULT</option>
+                </field>
+                <field
+                    name="admin_manager"
+                    type="ComboboxAdmin"
+                    label="PLG_FIELDS_COMBOBOX_ADMIN_MANAGER_LABEL"
+                    description="PLG_FIELDS_COMBOBOX_ADMIN_MANAGER_DESC"
+                />
+             </fieldset>
+        </fields>
+    </config>
+</extension>

@@ -1,0 +1,97 @@
+.combobox-admin-wrap {
+    margin-top: 0.5rem;
+}
+.combobox-admin-wrap .combobox-admin-message {
+    color: #666;
+    padding: 8px 10px;
+    background: #fafafa;
+    border: 1px dashed #e0e0e0;
+    border-radius: 3px;
+}
+.combobox-admin-wrap .combobox-admin-loading {
+    padding: 10px;
+    color: #333;
+}
+.combobox-admin-wrap .combobox-admin-error {
+    color: #b00;
+    padding: 10px;
+    background: #fff6f6;
+    border: 1px solid #f0caca;
+    border-radius: 3px;
+}
+
+
+
+/* Combobox admin table improvements */
+.combobox-admin-panel table.combobox-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #d0d0d0; /* medium contrast border */
+    margin: 6px 0;
+    font-size: 14px;
+    background: #fff;
+}
+
+.combobox-admin-panel table.combobox-admin-table thead th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #dcdcdc;
+    background: #f8f8f8;
+    color: #222;
+    font-weight: 600;
+}
+
+.combobox-admin-panel table.combobox-admin-table tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    color: #333;
+}
+
+/* zebra striping */
+.combobox-admin-panel table.combobox-admin-table tbody tr:nth-child(odd) {
+    background: #ffffff;
+}
+.combobox-admin-panel table.combobox-admin-table tbody tr:nth-child(even) {
+    background: #fbfbfb;
+}
+
+/* small tidy: actions column */
+.combobox-admin-panel td.combobox-admin-actions {
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Make Joomla admin button look consistent (fallback if classes missing) */
+button.combobox-btn {
+    display: inline-block;
+    padding: 6px 10px;
+    font-size: 13px;
+    line-height: 1;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Danger style fallback */
+button.combobox-btn--danger {
+    background: #d9534f;
+    color: #fff;
+    border: 1px solid #d43f3a;
+}
+
+/* small button */
+button.combobox-btn--sm {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+/* container panel */
+.combobox-admin-panel .combobox-admin-empty,
+.combobox-admin-panel .combobox-admin-loading,
+.combobox-admin-panel .combobox-admin-error {
+    padding: 12px;
+    margin: 6px 0;
+}
+
+
+
