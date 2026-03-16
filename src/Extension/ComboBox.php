@@ -123,21 +123,6 @@ class ComboBox extends FieldsPlugin implements SubscriberInterface
     }
 
     /**
-     * Adds additional fields to the user editing form
-     *
-     * @param   Model\PrepareFormEvent  $event  The event instance.
-     *
-     * @return  void
-     *
-     * @since   3.9.0
-     */
-    /*public function onContentPrepareForm(Form $form, $data)
-    {
-        Log::add('onContentPrepareForm: ', \Joomla\CMS\Log\Log::INFO, 'plg_fields_combobox');
-        return;
-    }*/
-
-    /**
      * Determine whether we are rendering a display-only context
      * (e.g. profile view page) rather than an edit/registration form.
      *

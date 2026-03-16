@@ -150,10 +150,10 @@ class Combobox extends FormField
         return $rendered;
     }
 
-        /**
+    /**
      * Attach vanilla JS and CSS
      */
-    protected function attachAssets()
+    /*protected function attachAssets()
     {
         $doc = Factory::getDocument();
         static $attached = false;
@@ -164,5 +164,77 @@ class Combobox extends FormField
         $base = Uri::root(true) . '/plugins/fields/combobox/assets';
         $doc->addStyleSheet($base . '/combobox.css');
         $doc->addScript($base . '/combobox.js');
+    }*/
+
+
+    protected function attachAssets()
+    {
+        $doc = Factory::getDocument();
+
+        static $attached = false;
+        if ($attached) {
+            return;
+        }
+        $attached = true;
+
+        // Paths
+        $assetRelative = '/plugins/fields/combobox/assets';
+        $baseUrl  = Uri::root(true) . $assetRelative;         // URL accessible by browser
+        $basePath = JPATH_ROOT . $assetRelative;             // filesystem path
+
+        $cssFile = $basePath . '/combobox.css';
+        $jsFile  = $basePath . '/combobox.js';
+        $cssUrl  = $baseUrl  . '/combobox.css';
+        $jsUrl   = $baseUrl  . '/combobox.js';
+
+        // Basic existence checks to help diagnose path problems early
+        if (!is_file($cssFile) || !is_file($jsFile)) {
+            // Log and fall back to best-effort registration; don't throw
+            Log::add(sprintf('Combobox assets not found. Expected: %s and %s', $cssFile, $jsFile), Log::WARNING, 'plg_fields_combobox');
+        }
+
+        // Try WebAssetManager (Joomla 4/6). If anything about WAM fails, we'll fall back.
+        try
+        {
+            if (method_exists($doc, 'getWebAssetManager'))
+            {
+                $wa = $doc->getWebAssetManager();
+
+                // Guard in case the WebAssetManager variant doesn't provide the helper methods
+                if (method_exists($wa, 'registerAndUseStyle') && method_exists($wa, 'registerAndUseScript'))
+                {
+                    // Register using the public URL (WAM accepts external/absolute URLs)
+                    $wa->registerAndUseStyle('plg.fields.combobox.styles', $cssUrl);
+                    $wa->registerAndUseScript('plg.fields.combobox.script', $jsUrl);
+
+                    return; // success — assets attached via WAM
+                }
+
+                // Some environments expose WAM but without the registerAndUse* convenience methods
+                // Fallback to generic register + use if available
+                if (method_exists($wa, 'register') && method_exists($wa, 'useStyle') && method_exists($wa, 'useScript'))
+                {
+                    $wa->register('plg.fields.combobox.styles', $cssUrl, [], []);
+                    $wa->useStyle('plg.fields.combobox.styles');
+
+                    $wa->register('plg.fields.combobox.script', $jsUrl, [], []);
+                    $wa->useScript('plg.fields.combobox.script');
+
+                    return;
+                }
+
+                // If WAM exists but doesn't support registration methods we can use, log and fall back.
+                Log::add('WebAssetManager present but lacks registerAndUse* or register/use helpers. Falling back to Document->addScript/addStyleSheet.', Log::DEBUG, 'plg_fields_combobox');
+            }
+        }
+        catch (\Throwable $e)
+        {
+            // Log the exception and fall through to the fallback registration
+            Log::add('WebAssetManager registration error for plg_fields_combobox: ' . $e->getMessage(), Log::ERROR, 'plg_fields_combobox');
+        }
+
+        // Final fallback: plain old addScript / addStyleSheet (works everywhere)
+        $doc->addStyleSheet($cssUrl);
+        $doc->addScript($jsUrl);
     }
 }
